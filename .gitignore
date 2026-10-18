@@ -1,0 +1,7 @@
+# projetos salvos e atualização baixada (dados da pessoa, nunca no git nem na release)
+dados/
+# prints e arquivos de teste
+testes/saida/
+__pycache__/
+*.pyc
+node_modules/

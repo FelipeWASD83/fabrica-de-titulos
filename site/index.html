@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fábrica de títulos</title>
+  <link rel="icon" href="icone.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="marca">
+      <img src="icone.svg" alt="" width="22" height="22">
+      <span class="marca-nome">Fábrica de títulos</span>
+    </div>
+    <input id="nomeProjeto" class="nome-projeto" type="text" spellcheck="false" aria-label="Nome do projeto">
+    <span id="estadoSalvo" class="rotulo-mono"></span>
+    <div class="barra-acoes">
+      <button id="btVersao" class="bt bt-pequeno rotulo-mono" title="Procurar atualização">v…</button>
+      <button id="btNovo" class="bt">Novo</button>
+      <button id="btProjetos" class="bt">Projetos</button>
+      <button id="btSalvar" class="bt">Salvar</button>
+      <div class="menu">
+        <button id="btExportar" class="bt bt-acao" aria-haspopup="true">Exportar</button>
+        <div id="menuExportar" class="menu-lista" hidden>
+          <button data-exportar="mod">Pacote para o mod MC:INFINITO <small>animado, camadas e posição livres</small></button>
+          <button data-exportar="vanilla">Pacote sem mod <small>imagem parada, cabe na faixa do Minecraft</small></button>
+          <button data-exportar="png">Imagem PNG do logo <small>só o logo, fundo transparente</small></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="area">
+    <section class="palco">
+      <div class="palco-ferramentas">
+        <label class="campo-inline">Tela
+          <select id="selTela">
+            <option value="janela">Ultrawide em janela (escala 5)</option>
+            <option value="cheia">Ultrawide em tela cheia (escala 6)</option>
+            <option value="vertical">Monitor em pé (escala 3)</option>
+          </select>
+        </label>
+        <label class="campo-inline">Ver
+          <select id="selVista">
+            <option value="tela">Tela de título</option>
+            <option value="logo">Logo de perto</option>
+          </select>
+        </label>
+        <label class="campo-inline"><input id="chkGuias" type="checkbox" checked> Guias</label>
+        <label class="campo-inline"><input id="chkAnimar" type="checkbox" checked> Animação</label>
+        <span id="qps" class="rotulo-mono qps"></span>
+      </div>
+      <div id="moldura" class="moldura">
+        <canvas id="previa"></canvas>
+        <div id="sobre" class="sobre"></div>
+        <div id="aviso" class="aviso" hidden></div>
+      </div>
+    </section>
+
+    <aside class="painel">
+      <section class="bloco">
+        <div class="bloco-cabeca">
+          <h2>Camadas</h2>
+          <span class="rotulo-mono">a de cima fica na frente</span>
+        </div>
+        <ol id="listaCamadas" class="camadas"></ol>
+        <div class="linha-botoes">
+          <button id="btAddTexto" class="bt bt-pequeno">+ Texto</button>
+          <button id="btAddMinecraft" class="bt bt-pequeno">+ MINECRAFT do jogo</button>
+          <button id="btAddJava" class="bt bt-pequeno">+ JAVA EDITION</button>
+        </div>
+      </section>
+      <div id="propriedades"></div>
+      <details class="secao" id="secaoGlobal">
+        <summary>Título inteiro</summary>
+        <div id="propsGlobais" class="secao-corpo"></div>
+      </details>
+    </aside>
+  </main>
+
+  <dialog id="dlgProjetos" class="dialogo">
+    <form method="dialog">
+      <div class="bloco-cabeca">
+        <h2>Projetos salvos</h2>
+        <button class="bt bt-pequeno" value="fechar">Fechar</button>
+      </div>
+      <ul id="listaProjetos" class="projetos"></ul>
+    </form>
+  </dialog>
+
+  <dialog id="dlgAtualizar" class="dialogo">
+    <form method="dialog">
+      <div class="bloco-cabeca">
+        <h2>Atualização</h2>
+        <button class="bt bt-pequeno" value="fechar">Fechar</button>
+      </div>
+      <p id="atualizarTexto" class="dica">Procurando…</p>
+      <pre id="atualizarNotas" class="notas" hidden></pre>
+      <div class="linha-botoes">
+        <button id="btAtualizar" class="bt bt-acao" type="button" hidden>Baixar e instalar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="progresso" class="progresso" hidden>
+    <div class="progresso-caixa">
+      <span id="progressoTexto">Gerando…</span>
+      <div class="progresso-barra"><div id="progressoBarra"></div></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
