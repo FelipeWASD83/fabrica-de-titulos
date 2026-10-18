@@ -28,8 +28,11 @@ panorama vêm de lá.
   letras das pontas inclinam.
 - **Cores:** face (arco-íris, degradê ou uma cor), espessura (cósmica, degradê ou uma cor, com estrelas), contorno,
   paredes, rachaduras e brilho da quina.
-- **JAVA EDITION:** "+ JAVA EDITION" já põe a faixa no meio dos dois textos; o botão "Pôr no meio dos dois textos"
-  refaz isso depois de mexer.
+- **JAVA EDITION:** "+ JAVA EDITION (3D)" cria o texto em 3D no meio dos dois textos, no estilo de pedra do
+  MINECRAFT, e ele é um texto como os outros: tamanho, posição, perspectiva, cores, contorno e camada. Mexeu em
+  alguma coisa e quer ele de volta no meio? Em "Tamanho e posição", o botão "Pôr entre as outras camadas" refaz isso
+  (vale para qualquer camada de texto). A imagem original do JAVA EDITION usa outra fonte, mais simples; ela só
+  aparece em projeto antigo que já tinha.
 - **Título inteiro:** subir ou descer tudo, onde fica o texto amarelo, a velocidade e quantos quadros a animação tem.
 - **Guias:** a linha branca é o fim da faixa que o jogo desenha sem o mod; a amarela é o primeiro botão. Se o logo
   passar dela, aparece um aviso embaixo.

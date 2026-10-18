@@ -10,7 +10,11 @@ explica o uso para ele.
 - Funções pedidas: texto de cima e de baixo, tamanho, posição, ordem das camadas, cor, perspectiva, e o "JAVA
   EDITION" do jogo no meio dos dois textos. Extras aprovados: **arrastar na prévia** e **projetos salvos**. O botão
   de instalar direto na instância ficou de fora (não aprovado).
-- O "JAVA EDITION" usa **outra fonte** (mais simples): não serve de modelo para as letras.
+- O "JAVA EDITION" da imagem do jogo usa **outra fonte** (mais simples): não serve de modelo para as letras. Ele
+  pediu em 18/10/2026 "faz o texto em 3d" (depois de pedir controles para ele): desde a 1.1.0 o botão cria um
+  **texto 3D** na fonte do logo (`PRESET_JAVA` em `estado.js`: o MINECRAFT do jogo escalado por 0,4247, ~512 de
+  largura, estilo pedra, uma rachadura por letra), com todos os controles de texto. A camada de imagem `edicao`
+  continua existindo só para ler projeto antigo e no formato do mod; não há botão para criá-la.
 - O 3D é renderizado e a animação vira quadros prontos: o jogo só troca imagem (mesma decisão do mod).
 - Direção visual "mesa de luz" (escolhida por mim, plano aprovado): grafite neutro (#141518, não preto) para julgar
   a cor do logo, prévia ocupando ~70% da largura, painel de seções que abrem e fecham, amarelo do splash (#ffe14a)
@@ -44,7 +48,7 @@ explica o uso para ele.
 
 ## Conferido em 17/10/2026
 
-- `node --test "testes/*.test.mjs"` (6) e `python -m unittest discover -s testes -p "test_*.py"` (5).
+- `node --test "testes/*.test.mjs"` (7) e `python -m unittest discover -s testes -p "test_*.py"` (5).
 - O preset do INFINITO no JS dá a mesma geometria do Python (escala 1,080, espessura 7,88, janela 200,155 624x130),
   e o pacote exportado bate com os quadros do jar: silhueta 99,97% igual, cor média com 2/255 de diferença (o resto
   são estrelas e rachaduras, sorteadas de outro jeito).

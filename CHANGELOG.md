@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.0 (18/10/2026)
+
+**Mudou**
+- O JAVA EDITION agora é texto 3D de verdade (botão "+ JAVA EDITION (3D)"), na fonte do logo e no estilo de pedra do
+  MINECRAFT, com os mesmos controles de qualquer texto: o que está escrito, tamanho, posição, perspectiva, cores,
+  contorno, rachaduras e camada. Nasce no meio dos dois textos, na frente.
+
+**Novo**
+- "Pôr entre as outras camadas", em Tamanho e posição: centraliza qualquer camada de texto na emenda entre a de cima
+  e a de baixo e põe na frente.
+
 ## 1.0.0 (18/10/2026)
 
 **Novo**

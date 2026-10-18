@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { montarTexto, janela, poligonosDoContorno } from "../site/js/camera.js";
-import { PRESET_INFINITO } from "../site/js/estado.js";
+import { PRESET_INFINITO, PRESET_JAVA, camadaJavaEdition } from "../site/js/estado.js";
 
 test("o INFINITO de baixo dá a mesma geometria da ferramenta Python (titulo-infinito 1.2.0)", () => {
   const t = montarTexto(PRESET_INFINITO);
@@ -44,6 +44,20 @@ test("medida que não cabe vira aviso, sem a espessura virar funil", () => {
   assert.ok(t.avisos.length >= 1);
   assert.ok(t.espessura < 500);
   assert.deepEqual(montarTexto(PRESET_INFINITO).avisos, []);
+});
+
+test("JAVA EDITION em 3D: cabe na fonte, sem aviso, com a largura da imagem do jogo (512)", () => {
+  const t = montarTexto(PRESET_JAVA);
+  assert.equal(t.grade.letras, "JAVA EDITION");
+  assert.deepEqual(t.avisos, []);
+  const j = janela(t, PRESET_JAVA.contorno);
+  assert.ok(Math.abs(j.largura - 512) < 40, JSON.stringify(j));
+  assert.ok(j.altura < 100, JSON.stringify(j));
+  const c = camadaJavaEdition();
+  assert.equal(c.tipo, "texto");
+  assert.equal(c.nome, "JAVA EDITION");
+  assert.equal(c.rachaduras.quantidade, 1);
+  assert.ok(Math.abs(c.contorno - 4.25) < 0.01);
 });
 
 test("texto vazio ou só com caractere fora da fonte não monta nada", () => {

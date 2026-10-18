@@ -164,6 +164,13 @@ export class Painel {
     }));
     const centralizar = criar("button", { class: "bt bt-pequeno" }, "Centralizar na horizontal");
     centralizar.addEventListener("click", () => { c.centroX = 512; this.mudou("forma"); this.montarPropriedades(); });
+    const entre = criar("button", { class: "bt bt-pequeno", title: "Centraliza na emenda entre a camada de cima e a de baixo e põe na frente (como o JAVA EDITION do jogo)" },
+      "Pôr entre as outras camadas");
+    entre.addEventListener("click", () => {
+      if (!this.centralizarEdicao(c)) { alert("Precisa de pelo menos duas outras camadas visíveis."); return; }
+      this.mudou("lista", c.id);
+      this.montarPropriedades();
+    });
 
     return [
       this._secao("Texto",
@@ -177,7 +184,7 @@ export class Painel {
         this.faixa("Espessura", c, "espessura", 0, 150, 0.5, "forma", "Altura da parte de lado (embaixo na vista de cima, em cima na vista de baixo)."),
         this.faixa("Posição X (centro)", c, "centroX", -600, 1600, 1, "forma"),
         this.faixa("Posição Y (borda de perto)", c, "linha", -400, 800, 0.5, "forma", "Vista de cima: o pé da face. Vista de baixo: o topo da face."),
-        criar("div", { class: "linha-botoes" }, centralizar)),
+        criar("div", { class: "linha-botoes" }, centralizar, entre)),
       this._secao("Perspectiva",
         this.escolha("Vista", c, "vista", [["cima", "De cima (como o MINECRAFT)"], ["baixo", "De baixo (como o INFINITO)"]], "forma", () => this.montarLista()),
         this.faixa("Força", c, "distFuga", 250, 6000, 10, "forma", "Distância até o ponto de fuga, em unidades do logo. Menor = as letras das pontas inclinam mais. O MINECRAFT do jogo tem uns 1600; o INFINITO, 850."),
@@ -239,19 +246,30 @@ export class Painel {
     ];
   }
 
-  /** Centraliza o "JAVA EDITION" na emenda entre o texto de cima e o de baixo, e põe na frente de tudo. */
+  /**
+   * Põe a camada (o JAVA EDITION, em texto 3D ou na imagem do jogo) no meio da emenda entre a camada de cima e a de
+   * baixo, centralizada na horizontal, e na frente de tudo. Precisa de outras duas camadas visíveis.
+   */
   centralizarEdicao(ed) {
     const outros = this.projeto.camadas.filter((c) => c !== ed && c.visivel)
       .map((c) => ({ c, r: retanguloDaCamada(c) })).filter((o) => o.r)
       .sort((a, b) => (a.r.y + a.r.altura / 2) - (b.r.y + b.r.altura / 2));
-    if (outros.length < 2) return;
+    if (outros.length < 2) return false;
     const cima = outros[0].r, baixo = outros[outros.length - 1].r;
     const emenda = (cima.y + cima.altura + baixo.y) / 2;
-    ed.x = Math.round(512 - ed.largura / 2);
-    ed.y = Math.round(emenda - ed.altura / 2);
+    if (ed.tipo === "texto") {
+      // a caixa (janela) do texto 3D inclui o contorno; o centro dela fica na emenda
+      const r = retanguloDaCamada(ed);
+      ed.centroX = 512;
+      ed.linha += emenda - (r.y + r.altura / 2);
+    } else {
+      ed.x = Math.round(512 - ed.largura / 2);
+      ed.y = Math.round(emenda - ed.altura / 2);
+    }
     const lista = this.projeto.camadas;
     lista.splice(lista.indexOf(ed), 1);
     lista.push(ed);
+    return true;
   }
 
   // --- título inteiro ---

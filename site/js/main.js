@@ -2,7 +2,7 @@
 
 import { Previa, retanguloDaCamada } from "./previa.js";
 import { Painel } from "./painel.js";
-import { projetoPadrao, completarProjeto, camadaDeTexto, camadaVanilla, PRESET_INFINITO, PRESET_CIMA } from "./estado.js";
+import { projetoPadrao, completarProjeto, camadaDeTexto, camadaVanilla, camadaJavaEdition, PRESET_INFINITO, PRESET_CIMA } from "./estado.js";
 import * as projetos from "./projetos.js";
 import { exportarPng, exportarParaMod, exportarSemMod } from "./exportar.js";
 
@@ -232,10 +232,10 @@ $("btAddTexto").addEventListener("click", () => {
 });
 $("btAddMinecraft").addEventListener("click", () => adicionar(camadaVanilla("minecraft")));
 $("btAddJava").addEventListener("click", () => {
-  const c = camadaVanilla("edicao");
+  const c = camadaJavaEdition();
   projeto.camadas.push(c);
   painel.projeto = projeto;
-  painel.centralizarEdicao(c);
+  painel.centralizarEdicao(c);       // sem duas outras camadas visíveis, fica onde nasceu
   selecionada = c.id;
   mudou("lista", c.id);
 });

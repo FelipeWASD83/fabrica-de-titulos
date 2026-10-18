@@ -55,6 +55,22 @@ export const PRESET_CIMA = {
   distFuga: 1600,
 };
 
+// O "JAVA EDITION" em 3D na fonte do logo: o MINECRAFT do jogo em ponto pequeno (a mesma forma, tudo escalado por
+// 0,4247, de 14,13 para 6 de largura de coluna), com ~512 unidades de largura como a imagem original do jogo.
+// A imagem do jogo usa outra fonte, mais simples; aqui ele vira texto como os outros, com todos os controles.
+const ESCALA_JAVA = 6 / PRESET_CIMA.coluna;
+export const PRESET_JAVA = {
+  texto: "JAVA EDITION",
+  vista: "cima",
+  linha: 190,
+  centroX: 512,
+  coluna: 6,
+  alturaFace: PRESET_CIMA.alturaFace * ESCALA_JAVA,
+  espessura: PRESET_CIMA.espessura * ESCALA_JAVA,
+  distFuga: PRESET_CIMA.distFuga * ESCALA_JAVA,
+  contorno: 10 * ESCALA_JAVA,
+};
+
 let contador = 0;
 export function novoId() {
   contador += 1;
@@ -73,7 +89,7 @@ export function camadaDeTexto(geometria, estilo = "avaritia", nome = null) {
     nome: nome || geometria.texto,
     visivel: true,
     ...clonar(geometria),
-    contorno: 8,
+    contorno: geometria.contorno ?? 8,
     contornoCor: e.contornoCor,
     face: e.face,
     lado: e.lado,
@@ -83,7 +99,14 @@ export function camadaDeTexto(geometria, estilo = "avaritia", nome = null) {
   };
 }
 
-/** "minecraft": o logo do jogo; "edicao": o "JAVA EDITION". Retângulos padrão iguais aos do vanilla. */
+/** O "JAVA EDITION" como texto 3D, no estilo de pedra do MINECRAFT e com uma rachadura por letra (é pequeno). */
+export function camadaJavaEdition() {
+  const c = camadaDeTexto(PRESET_JAVA, "pedra", "JAVA EDITION");
+  c.rachaduras.quantidade = 1;
+  return c;
+}
+
+/** "minecraft": o logo do jogo; "edicao": a imagem do "JAVA EDITION" do jogo (projetos antigos; o botão agora faz texto 3D). */
 export function camadaVanilla(qual) {
   const base = qual === "minecraft"
     ? { x: 0, y: 0, largura: 1024, altura: 176, nome: "MINECRAFT (imagem do jogo)" }
