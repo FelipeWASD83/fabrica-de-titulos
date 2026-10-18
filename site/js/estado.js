@@ -55,19 +55,22 @@ export const PRESET_CIMA = {
   distFuga: 1600,
 };
 
-// O "JAVA EDITION" em 3D na fonte do logo: o MINECRAFT do jogo em ponto pequeno (a mesma forma, tudo escalado por
-// 0,4247, de 14,13 para 6 de largura de coluna), com ~512 unidades de largura como a imagem original do jogo.
-// A imagem do jogo usa outra fonte, mais simples; aqui ele vira texto como os outros, com todos os controles.
-const ESCALA_JAVA = 6 / PRESET_CIMA.coluna;
+// O "JAVA EDITION" em 3D na fonte pixelada de 5 linhas (a do jogo), com ~512 unidades de largura e ~64 de altura
+// como a imagem original do jogo. A espessura e o contorno são os do MINECRAFT em ponto pequeno (4,45 / 14,13).
+// A inclinação das letras das pontas é bem menor que a do MINECRAFT (a imagem original é quase reta): por isso o
+// ponto de fuga fica a 1100 e a face a 40, medidos contra a imagem do jogo. Texto como os outros, com todos os
+// controles; a fonte se troca em "Texto".
+const ESCALA_JAVA = 4.45 / PRESET_CIMA.coluna;
 export const PRESET_JAVA = {
   texto: "JAVA EDITION",
+  fonte: "pixel",
   vista: "cima",
   linha: 190,
   centroX: 512,
-  coluna: 6,
-  alturaFace: PRESET_CIMA.alturaFace * ESCALA_JAVA,
+  coluna: 4.45,
+  alturaFace: 40,
   espessura: PRESET_CIMA.espessura * ESCALA_JAVA,
-  distFuga: PRESET_CIMA.distFuga * ESCALA_JAVA,
+  distFuga: 1100,
   contorno: 10 * ESCALA_JAVA,
 };
 
@@ -89,6 +92,7 @@ export function camadaDeTexto(geometria, estilo = "avaritia", nome = null) {
     nome: nome || geometria.texto,
     visivel: true,
     ...clonar(geometria),
+    fonte: geometria.fonte ?? "logo",
     contorno: geometria.contorno ?? 8,
     contornoCor: e.contornoCor,
     face: e.face,

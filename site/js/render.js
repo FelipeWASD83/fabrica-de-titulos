@@ -5,7 +5,6 @@
 // Mesma conta da ferramenta titulo-infinito/ferramentas/render_infinito.py.
 
 import { ALTURA, UNID, DZ, montarTexto, janela, poligonosDoContorno } from "./camera.js";
-import { FONTE } from "./fonte.js";
 import { criarAleatorio, hexParaRgb } from "./util.js";
 
 const VERT = `#version 300 es
@@ -237,8 +236,8 @@ function texturaDeRachaduras(texto, grade, quantidade, semente) {
   };
   const cel = (l, c) => grade.celulas[l * grade.colunas + c];
   let col = 0;
-  for (const ch of grade.letras) {
-    const larg = FONTE[ch][0].length;
+  for (const [i, ch] of [...grade.letras].entries()) {
+    const larg = grade.larguras[i];
     if (ch !== " ") {
       const n = larg > 3 ? quantidade : Math.max(0, quantidade - 1);
       for (let i = 0; i < n; i++) {

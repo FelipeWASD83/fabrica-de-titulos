@@ -21,17 +21,18 @@ panorama vêm de lá.
   entrar. A de cima da lista fica na frente; as setas trocam a ordem, o olho esconde.
 - **Na prévia:** clique numa camada para escolher, arraste para mover, puxe o quadradinho amarelo do canto para
   aumentar ou diminuir.
-- **Texto:** letras A a Z, números e `: . ! - ?`. Os três estilos prontos: Avaritia (arco-íris e espessura
+- **Texto:** letras A a Z, números e `: . ! - ?`, em duas fontes: a do logo do Minecraft (como o MINECRAFT) e a
+  pixelada de 5 linhas (como o JAVA EDITION); a troca é o campo "Fonte". Os três estilos prontos: Avaritia (arco-íris e espessura
   cósmica), Pedra (como o MINECRAFT) e Azul (como o Mini Series).
 - **Tamanho e posição:** "Tamanho geral" muda tudo junto sem deformar; os outros mexem em uma medida só.
 - **Perspectiva:** vista de cima (como o MINECRAFT) ou de baixo (como o INFINITO), e a força: quanto menor, mais as
   letras das pontas inclinam.
 - **Cores:** face (arco-íris, degradê ou uma cor), espessura (cósmica, degradê ou uma cor, com estrelas), contorno,
   paredes, rachaduras e brilho da quina.
-- **JAVA EDITION:** "+ JAVA EDITION (3D)" cria o texto em 3D no meio dos dois textos, no estilo de pedra do
+- **JAVA EDITION:** "+ JAVA EDITION (3D)" cria o texto em 3D, na fonte pixelada de 5 linhas, no meio dos dois textos, no estilo de pedra do
   MINECRAFT, e ele é um texto como os outros: tamanho, posição, perspectiva, cores, contorno e camada. Mexeu em
   alguma coisa e quer ele de volta no meio? Em "Tamanho e posição", o botão "Pôr entre as outras camadas" refaz isso
-  (vale para qualquer camada de texto). A imagem original do JAVA EDITION usa outra fonte, mais simples; ela só
+  (vale para qualquer camada de texto). A imagem original do JAVA EDITION do jogo só
   aparece em projeto antigo que já tinha.
 - **Título inteiro:** subir ou descer tudo, onde fica o texto amarelo, a velocidade e quantos quadros a animação tem.
 - **Guias:** a linha branca é o fim da faixa que o jogo desenha sem o mod; a amarela é o primeiro botão. Se o logo

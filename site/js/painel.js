@@ -175,6 +175,7 @@ export class Painel {
     return [
       this._secao("Texto",
         criar("label", { class: "campo" }, criar("span", {}, "Escrito"), nome),
+        this.escolha("Fonte", c, "fonte", [["logo", "Logo do Minecraft (como o MINECRAFT)"], ["pixel", "Pixelada, 5 linhas (como o JAVA EDITION)"]], "forma"),
         criar("p", { class: "dica" }, "Letras A a Z, números e : . ! - ? (acento e minúscula viram a letra sem acento, maiúscula)."),
         criar("div", { class: "campo" }, criar("span", {}, "Estilo pronto"), estilos)),
       this._secao("Tamanho e posição",

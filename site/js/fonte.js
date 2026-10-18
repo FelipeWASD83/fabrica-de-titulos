@@ -84,14 +84,78 @@ export const FONTE = {
         "..#####", ".......", ".......", "..###..", "..###.."],
 };
 
+// A fonte pixelada do "JAVA EDITION" do jogo: letras de 5 pixels de altura, traço de 1 pixel, cantos cortados.
+// Desenhada em 5 linhas; cada pixel vira 2 colunas x 2 meias-linhas da grade (a mesma de 10 linhas do logo), então a
+// câmera e o renderizador não mudam. O espaço entre letras é 1 coluna (meio pixel), como no jogo.
+const PIXEL = {
+  A: [".###.", "#...#", "#####", "#...#", "#...#"],
+  B: ["####.", "#...#", "####.", "#...#", "####."],
+  C: [".####", "#....", "#....", "#....", ".####"],
+  D: ["####.", "#...#", "#...#", "#...#", "####."],
+  E: ["#####", "#....", "###..", "#....", "#####"],
+  F: ["#####", "#....", "###..", "#....", "#...."],
+  G: [".####", "#....", "#..##", "#...#", ".###."],
+  H: ["#...#", "#...#", "#####", "#...#", "#...#"],
+  I: ["###", ".#.", ".#.", ".#.", "###"],
+  J: [".###", "...#", "...#", "#..#", ".##."],
+  K: ["#..#", "#.#.", "##..", "#.#.", "#..#"],
+  L: ["#...", "#...", "#...", "#...", "####"],
+  M: ["#...#", "##.##", "#.#.#", "#...#", "#...#"],
+  N: ["#...#", "##..#", "#.#.#", "#..##", "#...#"],
+  O: [".###.", "#...#", "#...#", "#...#", ".###."],
+  P: ["####.", "#...#", "####.", "#....", "#...."],
+  Q: [".###.", "#...#", "#...#", "#..##", ".####"],
+  R: ["####.", "#...#", "####.", "#..#.", "#...#"],
+  S: [".####", "#....", ".###.", "....#", "####."],
+  T: ["#####", "..#..", "..#..", "..#..", "..#.."],
+  U: ["#...#", "#...#", "#...#", "#...#", ".###."],
+  V: ["#...#", "#...#", "#...#", ".#.#.", "..#.."],
+  W: ["#...#", "#...#", "#.#.#", "##.##", "#...#"],
+  X: ["#...#", ".#.#.", "..#..", ".#.#.", "#...#"],
+  Y: ["#...#", ".#.#.", "..#..", "..#..", "..#.."],
+  Z: ["#####", "...#.", "..#..", ".#...", "#####"],
+  0: [".###.", "#..##", "#.#.#", "##..#", ".###."],
+  1: [".#.", "##.", ".#.", ".#.", "###"],
+  2: ["####.", "....#", ".###.", "#....", "#####"],
+  3: ["####.", "....#", ".###.", "....#", "####."],
+  4: ["#...#", "#...#", "#####", "....#", "....#"],
+  5: ["#####", "#....", "####.", "....#", "####."],
+  6: [".###.", "#....", "####.", "#...#", ".###."],
+  7: ["#####", "....#", "...#.", "..#..", "..#.."],
+  8: [".###.", "#...#", ".###.", "#...#", ".###."],
+  9: [".###.", "#...#", ".####", "....#", ".###."],
+  " ": ["..", "..", "..", "..", ".."],
+  ":": [".", "#", ".", "#", "."],
+  ".": [".", ".", ".", ".", "#"],
+  "!": ["#", "#", "#", ".", "#"],
+  "-": ["...", "...", "###", "...", "..."],
+  "?": ["####.", "....#", "..##.", ".....", "..#.."],
+};
+
+export const FONTE_PIXEL = PIXEL;
+
+function expandir(px) {
+  const out = {};
+  for (const [ch, linhas] of Object.entries(px)) {
+    out[ch] = linhas.flatMap((l) => {
+      const dobrada = [...l].map((c) => c + c).join("");
+      return [dobrada, dobrada];
+    });
+  }
+  return out;
+}
+
+/** As fontes que um texto pode usar, todas na grade de 10 meias-linhas. */
+export const FONTES = { logo: FONTE, pixel: expandir(PIXEL) };
+
 /** Letras com acento viram a letra sem acento; minúscula vira maiúscula; o que a fonte não tem some. */
-export function normalizar(texto) {
+export function normalizar(texto, fonte = "logo") {
   return texto
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "")
     .toUpperCase()
     .split("")
-    .filter((ch) => ch in FONTE)
+    .filter((ch) => ch in (FONTES[fonte] || FONTE))
     .join("");
 }
 
@@ -99,18 +163,21 @@ export function normalizar(texto) {
  * Grade da palavra: 10 linhas, 1 coluna vazia entre letras. Devolve {linhas: 10, colunas, celulas: Uint8Array}
  * com celulas[linha * colunas + coluna] = 1 onde tem bloco.
  */
-export function gradeDaPalavra(texto) {
-  const letras = normalizar(texto);
+export function gradeDaPalavra(texto, fonte = "logo") {
+  const glifos = FONTES[fonte] || FONTE;
+  const letras = normalizar(texto, fonte);
   const colunas = [];
+  const larguras = [];      // colunas de cada letra, para quem precisa saber onde uma termina (rachaduras)
   [...letras].forEach((ch, i) => {
     if (i) colunas.push(Array(10).fill(0));
-    const g = FONTE[ch];
+    const g = glifos[ch];
+    larguras.push(g[0].length);
     for (let c = 0; c < g[0].length; c++) colunas.push(g.map((linha) => (linha[c] === "#" ? 1 : 0)));
   });
   const n = Math.max(colunas.length, 1);
   const celulas = new Uint8Array(10 * n);
   colunas.forEach((col, c) => col.forEach((v, l) => { celulas[l * n + c] = v; }));
-  return { linhas: 10, colunas: n, celulas, letras };
+  return { linhas: 10, colunas: n, celulas, letras, larguras };
 }
 
 /** Vira a grade de cabeça para baixo (para a vista de baixo: a imagem é virada depois e o texto volta a ler normal). */

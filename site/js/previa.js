@@ -47,7 +47,7 @@ export function retanguloDaCamada(c) {
 }
 
 export function chaveDeGeometria(c) {
-  return JSON.stringify([c.texto, c.vista, c.linha, c.centroX, c.coluna, c.alturaFace, c.espessura, c.distFuga,
+  return JSON.stringify([c.texto, c.fonte, c.vista, c.linha, c.centroX, c.coluna, c.alturaFace, c.espessura, c.distFuga,
     c.contorno, c.rachaduras.quantidade, c.rachaduras.semente]);
 }
 

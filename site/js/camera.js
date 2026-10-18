@@ -61,7 +61,7 @@ function buscar(f, lo, hi, alvo, crescente) {
  * A câmera é achada pelas medidas, como o INFINITO na ferramenta Python. Devolve null se o texto estiver vazio.
  */
 export function montarTexto(p) {
-  let grade = gradeDaPalavra(p.texto);
+  let grade = gradeDaPalavra(p.texto, p.fonte);
   if (!grade.letras.length) return null;
   const baixo = p.vista === "baixo";
   if (baixo) grade = virarGrade(grade);

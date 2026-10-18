@@ -56,8 +56,34 @@ test("JAVA EDITION em 3D: cabe na fonte, sem aviso, com a largura da imagem do j
   const c = camadaJavaEdition();
   assert.equal(c.tipo, "texto");
   assert.equal(c.nome, "JAVA EDITION");
+  assert.equal(c.fonte, "pixel");
   assert.equal(c.rachaduras.quantidade, 1);
-  assert.ok(Math.abs(c.contorno - 4.25) < 0.01);
+  assert.ok(Math.abs(c.contorno - 3.15) < 0.01, c.contorno);
+});
+
+test("fonte pixelada: 5 linhas por glifo, expandida para a grade de 10 meias-linhas, com o alfabeto inteiro", async () => {
+  const { FONTE_PIXEL, FONTES, gradeDaPalavra, normalizar } = await import("../site/js/fonte.js");
+  for (const [ch, linhas] of Object.entries(FONTE_PIXEL)) {
+    assert.equal(linhas.length, 5, `${ch} tem ${linhas.length} linhas`);
+    assert.ok(linhas.every((l) => l.length === linhas[0].length), `${ch} com linhas de larguras diferentes`);
+    assert.equal(FONTES.pixel[ch].length, 10);
+    assert.equal(FONTES.pixel[ch][0].length, linhas[0].length * 2);
+  }
+  for (const ch of "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :.!-?") assert.ok(ch in FONTE_PIXEL, `falta ${ch}`);
+  // cada pixel vira 2 x 2: a linha 2k e a 2k+1 são iguais
+  for (const g of Object.values(FONTES.pixel)) for (let k = 0; k < 10; k += 2) assert.equal(g[k], g[k + 1]);
+  const g = gradeDaPalavra("JAVA EDITION", "pixel");
+  assert.equal(g.colunas, 115);
+  assert.deepEqual(g.larguras, [8, 10, 10, 10, 4, 10, 10, 6, 10, 6, 10, 10]);
+  assert.equal(normalizar("Édi-ção", "pixel"), "EDI-CAO");
+});
+
+test("a fonte pixelada vira 3D sem aviso em qualquer vista", () => {
+  for (const vista of ["cima", "baixo"]) {
+    const t = montarTexto({ ...PRESET_JAVA, vista });
+    assert.deepEqual(t.avisos, [], vista);
+    assert.ok(t.k > 0 && t.espessura > 0);
+  }
 });
 
 test("texto vazio ou só com caractere fora da fonte não monta nada", () => {

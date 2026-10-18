@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.2.0 (18/10/2026)
+
+**Novo**
+- Segunda fonte para os textos: a pixelada de 5 linhas do JAVA EDITION do jogo (letras de 5 pixels de altura, traço
+  de 1 pixel, cantos cortados), com A a Z, números e `: . ! - ?`. O campo "Fonte", em Texto, troca entre ela e a do
+  logo do Minecraft em qualquer camada de texto.
+
+**Mudou**
+- O JAVA EDITION em 3D agora nasce na fonte pixelada, parecida com a da imagem do jogo, com a mesma largura e altura
+  dela e com as letras das pontas bem menos inclinadas que as do MINECRAFT (a imagem original é quase reta).
+
 ## 1.1.0 (18/10/2026)
 
 **Mudou**

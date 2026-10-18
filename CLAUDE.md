@@ -10,11 +10,14 @@ explica o uso para ele.
 - Funções pedidas: texto de cima e de baixo, tamanho, posição, ordem das camadas, cor, perspectiva, e o "JAVA
   EDITION" do jogo no meio dos dois textos. Extras aprovados: **arrastar na prévia** e **projetos salvos**. O botão
   de instalar direto na instância ficou de fora (não aprovado).
-- O "JAVA EDITION" da imagem do jogo usa **outra fonte** (mais simples): não serve de modelo para as letras. Ele
-  pediu em 18/10/2026 "faz o texto em 3d" (depois de pedir controles para ele): desde a 1.1.0 o botão cria um
-  **texto 3D** na fonte do logo (`PRESET_JAVA` em `estado.js`: o MINECRAFT do jogo escalado por 0,4247, ~512 de
-  largura, estilo pedra, uma rachadura por letra), com todos os controles de texto. A camada de imagem `edicao`
-  continua existindo só para ler projeto antigo e no formato do mod; não há botão para criá-la.
+- O "JAVA EDITION" da imagem do jogo usa **outra fonte**, bem mais pixelada: letras de 5 pixels de altura, traço de
+  1 pixel, cantos cortados (D, O, A), J com gancho embaixo. Ele pediu em 18/10/2026 "faz o texto em 3d" (depois de
+  pedir controles para ele) e, em seguida, "tenta fazer uma [fonte] parecida": desde a 1.1.0 o botão cria um
+  **texto 3D** com todos os controles de texto, e desde a 1.2.0 ele usa a **fonte pixelada de 5 linhas** (campo
+  `fonte` da camada: `logo` ou `pixel`, escolhido em "Texto"). O `PRESET_JAVA` (`estado.js`) mede ~512 x 64
+  unidades como a imagem do jogo, estilo pedra, uma rachadura por letra; a inclinação das letras das pontas é bem
+  menor que a do MINECRAFT (face 40, ponto de fuga a 1100), porque a imagem original é quase reta. A camada de
+  imagem `edicao` continua existindo só para ler projeto antigo e no formato do mod; não há botão para criá-la.
 - O 3D é renderizado e a animação vira quadros prontos: o jogo só troca imagem (mesma decisão do mod).
 - Direção visual "mesa de luz" (escolhida por mim, plano aprovado): grafite neutro (#141518, não preto) para julgar
   a cor do logo, prévia ocupando ~70% da largura, painel de seções que abrem e fecham, amarelo do splash (#ffe14a)
@@ -36,7 +39,11 @@ explica o uso para ele.
   fonte de cabeça para baixo. O nadir fica a no mínimo 2 alturas de face (senão a espessura vira funil); medida que
   não cabe vira aviso. O contorno é geométrico, de cantos vivos (polígono por bloco, cantos em ponta).
 - `site/js/fonte.js`: M, I, N, E, C, R, A, F e T medidos no logo do jogo (o A sem a cara do creeper); o resto
-  desenhado na mesma grade (traço de 3, 10 meias-linhas).
+  desenhado na mesma grade (traço de 3, 10 meias-linhas). A **fonte pixelada** (`FONTE_PIXEL`, A a Z, 0 a 9 e
+  `: . ! - ?`) é desenhada em 5 linhas e expandida (cada pixel vira 2 colunas x 2 meias-linhas, e o espaço entre
+  letras é 1 coluna, meio pixel), então a câmera e o renderizador não mudam; `gradeDaPalavra(texto, fonte)` devolve
+  também `larguras` (colunas de cada letra, que as rachaduras usam). Os glifos de 5 linhas foram desenhados a olho
+  contra a imagem do jogo (não há como extrair letra por letra); conferidos lado a lado com ela.
 - `site/js/render.js` (WebGL2): passe de geometria (raio por pixel, superamostrado, só quando a forma muda), passe de
   cor (a cada quadro: arco-íris, degradês, rachaduras, estrelas procedurais em células de 16 px) e redução com alfa
   pré-multiplicado. Exporta a 1,5 px por unidade do logo com superamostragem 3, como a ferramenta do mod.
@@ -48,7 +55,7 @@ explica o uso para ele.
 
 ## Conferido em 17/10/2026
 
-- `node --test "testes/*.test.mjs"` (7) e `python -m unittest discover -s testes -p "test_*.py"` (5).
+- `node --test "testes/*.test.mjs"` (9) e `python -m unittest discover -s testes -p "test_*.py"` (5).
 - O preset do INFINITO no JS dá a mesma geometria do Python (escala 1,080, espessura 7,88, janela 200,155 624x130),
   e o pacote exportado bate com os quadros do jar: silhueta 99,97% igual, cor média com 2/255 de diferença (o resto
   são estrelas e rachaduras, sorteadas de outro jeito).
